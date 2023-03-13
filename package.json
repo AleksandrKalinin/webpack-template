@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --config webpack.dev",
-    "build": "webpack --config webpack.prod"
+    "build": "webpack --config webpack.prod",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "apollo-boost": "^0.4.9",
@@ -35,6 +37,8 @@
     "eslint-webpack-plugin": "^3.2.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "prettier": "^1.19.1",
     "sass": "^1.59.2",
     "sass-loader": "^13.2.0",
@@ -48,5 +52,10 @@
     "webpack-dev-server": "^4.11.0",
     "webpack-merge": "^5.8.0",
     "webpack-plugin-vuetify": "^2.0.1"
+  },
+  "lint-staged": {
+    "*.{js,ts,css,sass,vue}": [
+      "npm run lint"
+    ]
   }
 }
