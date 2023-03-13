@@ -1,7 +1,7 @@
 <template>
   <v-layout class="d-block">
     <Header />
-    <div>This is a Home view</div>
+    <Employees />
     <v-footer></v-footer>
   </v-layout>
 </template>
@@ -9,12 +9,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Header from '@/components/Header/Header.vue'
+import Employees from '@/components/Employees/Employees.vue'
 
 export default defineComponent({
-  name: 'HomeView',
+  name: 'EmployeesView',
 
   components: {
-    Header
+    Header,
+    Employees
   },
 
   data() {

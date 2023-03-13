@@ -17,7 +17,7 @@
             <tbody>
               <tr v-for="employee in employees" :key="employee.id" class="mb-2">
                 <td class="text-left pa-2">
-                  <v-img :width="70" aspect-ratio="1" cover :src="employee.profile.avatar"></v-img>
+                  <v-img :width="120" aspect-ratio="1" cover :src="employee.profile.avatar"></v-img>
                 </td>
                 <td class="text-left">{{ employee.profile.first_name }}</td>
                 <td class="text-left">{{ employee.profile.last_name }}</td>
@@ -44,15 +44,43 @@
 import { onMounted, ref, Ref } from 'vue'
 const isLoaded = ref(false)
 const employees: Ref<any> = ref([])
+const token: Ref<string | null> = ref('')
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE0NTQsImVtYWlsIjoiYWxla3NhbmRyX2thbGluaW5fMTk5NUBtYWlsLnJ1Iiwicm9sZSI6ImVtcGxveWVlIiwiaWF0IjoxNjc4NzA2MTA0LCJleHAiOjE2Nzg3MTMzMDR9.3_SE9ivCeprju4PaPqjxYvuBOEBVWnTjMX9RRXB39QQ'
+function login() {
+  fetch('https://cv-project-js.inno.ws/api/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: `query getUsers($auth: AuthInput!) {
+        login(auth: $auth) {
+            user {
+            email
+            }, access_token
+        }
+    }`,
+      variables: {
+        auth: {
+          email: 'aleksandr_kalinin_1995@mail.ru',
+          password: '123456'
+        }
+      }
+    })
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      localStorage.setItem('token', res.data.login.access_token)
+    })
+}
+
 function fetchData() {
+  token.value = localStorage.getItem('token')
   fetch('https://cv-project-js.inno.ws/api/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${localStorage.getItem('token')}`
     },
     body: JSON.stringify({
       query: `{
@@ -76,11 +104,13 @@ function fetchData() {
   })
     .then((res) => res.json())
     .then((res) => {
-      console.log(res.data.users)
       employees.value = res.data.users
     })
     .then(() => {
       isLoaded.value = true
+    })
+    .catch((e) => {
+      console.log(e)
     })
 }
 onMounted(() => {
