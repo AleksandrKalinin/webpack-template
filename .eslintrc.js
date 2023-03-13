@@ -4,12 +4,12 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:vue/vue3-essential',
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:prettier/recommended',
-    '@vue/typescript/recommended',
-    'plugin:@typescript-eslint/recommended'
+    '@vue/typescript/recommended'
   ],
   rules: {
     'vue/multi-word-component-names': 'off',

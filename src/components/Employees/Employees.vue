@@ -41,9 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, Ref } from 'vue'
 const isLoaded = ref(false)
-const employees = ref([])
+const employees: Ref<any> = ref([])
 
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE0NTQsImVtYWlsIjoiYWxla3NhbmRyX2thbGluaW5fMTk5NUBtYWlsLnJ1Iiwicm9sZSI6ImVtcGxveWVlIiwiaWF0IjoxNjc4NzA2MTA0LCJleHAiOjE2Nzg3MTMzMDR9.3_SE9ivCeprju4PaPqjxYvuBOEBVWnTjMX9RRXB39QQ'
