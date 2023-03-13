@@ -5,6 +5,7 @@
   "scripts": {
     "start": "webpack serve --config webpack.dev",
     "build": "webpack --config webpack.prod",
+    "lint": "lint",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
