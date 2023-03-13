@@ -1,18 +1,20 @@
 import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
+import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ApolloLink, concat } from 'apollo-link'
 
-// HTTP connection to the API
-const httpLink = createHttpLink({
-  // You should use an absolute URL here
-  uri: 'https://rickandmortyapi.com/graphql'
+const httpLink = new HttpLink({ uri: 'https://cv-project-js.inno.ws/api/graphql' })
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem('token')
+  operation.setContext({
+    headers: {
+      Authorization: token ? `Bearer ${token}` : ''
+    }
+  })
+  return forward(operation)
 })
-
-// Cache implementation
-const cache = new InMemoryCache()
-
-// Create the apollo client
 export const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache
+  link: concat(authMiddleware, httpLink),
+  cache: new InMemoryCache()
 })

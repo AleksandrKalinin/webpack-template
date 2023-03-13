@@ -32,7 +32,7 @@ module.exports = {
       }
     ],
     'no-console': 'warn',
-    'max-len': [1, 120, 2, { ignoreComments: true }]
+    'max-len': [1, 300, 2, { ignoreComments: true }]
   },
   settings: {
     'import/resolver': {
